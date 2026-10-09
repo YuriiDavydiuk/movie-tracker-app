@@ -1,10 +1,11 @@
 // styles
-import css from './CreateMovie.module.css';
+import css from '../../styles/MovieForm.module.css';
 
 // libraries
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { movieSchema } from '../../validation/movieSchema';
+import type { NewMovie } from '../../types/movie';
 
 // components
 import { createMovie } from '../../services/movieService';
@@ -15,24 +16,17 @@ interface CreateMovieForm {
 
 interface FormValues {
   title: string;
-  releaseYear: number;
+  releaseYear: number | string;
   tagline: string;
   status: 'plan' | 'watching' | 'watched';
 }
 
 const initialValues: FormValues = {
   title: '',
-  releaseYear: 2026,
+  releaseYear: new Date().getFullYear(),
   tagline: '',
   status: 'plan',
 };
-
-const CreateFormSchema = Yup.object().shape({
-  title: Yup.string().trim().min(1).required('Title is required'),
-  releaseYear: Yup.number(),
-  tagline: Yup.string(),
-  status: Yup.string().oneOf(['plan', 'watching', 'watched']).required(),
-});
 
 export default function CreateMovieForm({ onClose }: CreateMovieForm) {
   const queryClient = useQueryClient();
@@ -45,18 +39,23 @@ export default function CreateMovieForm({ onClose }: CreateMovieForm) {
     },
   });
 
-  function handleSubmit(values: FormValues, FormilHelpers: FormikHelpers<FormValues>) {
-    mutation.mutate(values, {
-      onSuccess: () => FormilHelpers.resetForm(),
+  function handleSubmit(values: FormValues, formikHelpers: FormikHelpers<FormValues>) {
+    const payload: NewMovie = {
+      title: values.title.trim(),
+      tagline: values.tagline,
+      status: values.status,
+    };
+    if (String(values.releaseYear).trim() !== '') {
+      payload.releaseYear = Number(values.releaseYear);
+    }
+
+    mutation.mutate(payload, {
+      onSuccess: () => formikHelpers.resetForm(),
     });
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={CreateFormSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={movieSchema} onSubmit={handleSubmit}>
       <Form className={css.form}>
         <h2 className={css.heading}>Create Movie</h2>
 
@@ -87,7 +86,11 @@ export default function CreateMovieForm({ onClose }: CreateMovieForm) {
           <Field id="tagline" type="text" name="tagline" className={css.input} />
           <ErrorMessage name="tagline" component="span" className={css.error} />
         </div>
-
+        {mutation.isError && (
+          <p className={css.error} role="alert">
+            Could not save the movie. Please try again
+          </p>
+        )}
         <div className={css.actions}>
           <button type="button" className={css.cancelButton} onClick={onClose}>
             Cancel

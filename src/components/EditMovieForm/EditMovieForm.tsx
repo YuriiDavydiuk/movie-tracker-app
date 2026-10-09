@@ -1,18 +1,11 @@
-import * as Yup from 'yup';
-import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
+import { movieSchema } from '../../validation/movieSchema';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import css from './EditMovieForm.module.css';
+import css from '../../styles/MovieForm.module.css';
 
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import type { Movie } from '../../types/movie';
+import type { Movie, MovieUpdate } from '../../types/movie';
 import { updateMovie } from '../../services/movieService';
-
-const ValidationEditMovieFormSchema = Yup.object().shape({
-  title: Yup.string().trim().min(1).required('Title is required'),
-  releaseYear: Yup.number(),
-  tagline: Yup.string(),
-  status: Yup.string().oneOf(['plan', 'watching', 'watched']).required(),
-});
 
 interface EditMovieFormProps {
   movie: Movie;
@@ -21,11 +14,10 @@ interface EditMovieFormProps {
 
 export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
   interface FormData {
-    _id: string;
-    title?: string;
-    releaseYear?: number;
-    tagline?: string;
-    status?: 'plan' | 'watching' | 'watched';
+    title: string;
+    releaseYear: number | string;
+    tagline: string;
+    status: 'plan' | 'watching' | 'watched';
   }
   const queryClient = useQueryClient();
 
@@ -37,15 +29,28 @@ export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
     },
   });
 
-  const handleSubmit = (values: FormData, actions: FormikHelpers<FormData>) => {
-    mutation.mutate(values);
-    actions.resetForm();
+  const handleSubmit = (values: FormData) => {
+    const payload: MovieUpdate = {
+      _id: movie._id,
+      title: values.title.trim(),
+      tagline: values.tagline,
+      status: values.status,
+    };
+    if (String(values.releaseYear).trim() !== '') {
+      payload.releaseYear = Number(values.releaseYear);
+    }
+    mutation.mutate(payload);
   };
 
   return (
     <Formik
-      initialValues={movie}
-      validationSchema={ValidationEditMovieFormSchema}
+      initialValues={{
+        title: movie.title ?? '',
+        releaseYear: movie.releaseYear ?? '',
+        tagline: movie.tagline ?? '',
+        status: movie.status ?? 'plan',
+      }}
+      validationSchema={movieSchema}
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
@@ -78,13 +83,17 @@ export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
           <Field id="tagline" type="text" name="tagline" className={css.input} />
           <ErrorMessage name="tagline" component="span" className={css.error} />
         </div>
-
+        {mutation.isError && (
+          <p className={css.error} role="alert">
+            Could not save the movie. Please try again
+          </p>
+        )}
         <div className={css.actions}>
           <button type="button" className={css.cancelButton} onClick={onClose}>
             Cancel
           </button>
-          <button type="submit" className={css.submitButton}>
-            Save
+          <button type="submit" className={css.submitButton} disabled={mutation.isPending}>
+            {mutation.isPending ? 'Saving...' : 'Save'}
           </button>
         </div>
       </Form>

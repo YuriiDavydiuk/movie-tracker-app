@@ -101,18 +101,6 @@
   margin: 0 auto;
 }
 
-.confirmIconWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  border-radius: 50%;
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
-}
-
 .confirmText {
   margin: 0;
   font-size: 17px;

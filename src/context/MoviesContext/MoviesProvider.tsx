@@ -9,7 +9,8 @@ export function MoviesProvider({ children }: { children: ReactNode }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get('query') ?? '';
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const page = Number(searchParams.get('page'));
+  const currentPage = Number.isSafeInteger(page) && page > 0 ? page : 1;
 
   const setCurrentPage = (page: number) => {
     setSearchParams(prev => {
@@ -29,7 +30,7 @@ export function MoviesProvider({ children }: { children: ReactNode }) {
     });
   }, 300);
 
-  const { data, isLoading, isError, isSuccess } = useQuery({
+  const { data, isLoading, isError, isSuccess, isFetching } = useQuery({
     queryKey: ['movies', searchQuery, currentPage],
     queryFn: () => getMovies(searchQuery, currentPage),
     placeholderData: keepPreviousData,
@@ -42,6 +43,7 @@ export function MoviesProvider({ children }: { children: ReactNode }) {
     isLoading,
     isError,
     isSuccess,
+    isFetching,
     setCurrentPage,
     handleSearch,
   };

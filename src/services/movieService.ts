@@ -1,12 +1,6 @@
-import axios from 'axios';
+import { api } from './apiClient';
 
 import type { MovieHttpResponse, Movie, NewMovie, MovieUpdate } from '../types/movie';
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-const api = axios.create({
-  baseURL: BASE_URL,
-});
 
 export async function getMovies(
   search: string,

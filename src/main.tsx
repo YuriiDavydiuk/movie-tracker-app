@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import 'modern-normalize/modern-normalize.css';
 import './styles/reset.css';
 import App from './components/App/App.tsx';
 import { ModalProvider } from './context/ModalContext/ModalProvider.tsx';
