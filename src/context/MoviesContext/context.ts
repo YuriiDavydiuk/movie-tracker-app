@@ -8,6 +8,7 @@ export interface MoviesContextValue {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
+  isFetching: boolean;
   setCurrentPage: (page: number) => void;
   handleSearch: (value: string) => void;
 }

@@ -6,12 +6,17 @@ import { useMovies } from '../../context/MoviesContext/useMovie';
 import { useModal } from '../../context/ModalContext/useModal';
 
 export default function Main() {
-  const { data, isLoading, isError, searchQuery } = useMovies();
+  const { data, isLoading, isError, searchQuery, isFetching } = useMovies();
   const { openEdit } = useModal();
 
   return (
     <main className={css.app}>
       {isLoading && <Loader />}
+      {isFetching && !isLoading && (
+        <p className={css.updating} role="status">
+          Updating movies...
+        </p>
+      )}
       {isError && <ErrorMessage />}
 
       {data && data.movies.length > 0 && (

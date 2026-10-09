@@ -17,6 +17,7 @@ export default function Movie({ movie, onEdit }: MovieProps) {
   const mutation = useMutation({
     mutationFn: deleteMovie,
     onSuccess: () => {
+      setIsConfirmOpen(false);
       queryClient.invalidateQueries({ queryKey: ['movies'] });
     },
   });
@@ -36,10 +37,15 @@ export default function Movie({ movie, onEdit }: MovieProps) {
         <button className={css.edit} onClick={() => onEdit(movie)}>
           Edit
         </button>
-        <button className={css.delete} onClick={() => setIsConfirmOpen(true)}>
+        <button
+          className={css.delete}
+          disabled={mutation.isPending}
+          onClick={() => setIsConfirmOpen(true)}
+        >
           Delete
         </button>
       </div>
+      {mutation.isError && <p role="alert">Could not delete the movie. Please try again.</p>}
       {isConfirmOpen && (
         <Modal onClose={() => setIsConfirmOpen(false)}>
           <div className={css.confirm}>
