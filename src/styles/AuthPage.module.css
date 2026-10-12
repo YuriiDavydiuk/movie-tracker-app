@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 60px 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #212529;
+}
+
+.subtitle {
+  margin: 8px 0 24px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.switch {
+  margin: 24px 0 0;
+  font-size: 14px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.link {
+  font-weight: 600;
+  color: #0d6efd;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.submit {
+  width: 100%;
+}

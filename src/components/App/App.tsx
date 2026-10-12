@@ -1,22 +1,32 @@
-import { Suspense, lazy } from 'react';
+import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import css from './App.module.css';
-import Footer from '../Footer/Footer';
-import Loader from '../Loader/Loader';
+import Layout from '../Layout/Layout';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import MoviesPage from '../../pages/MoviesPage/MoviesPage';
 
 const ConfigPage = lazy(() => import('../../pages/ConfigPage/ConfigPage'));
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
+const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
 
 export default function App() {
   return (
-    <div className={css.wrapper}>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<MoviesPage />} />
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<MoviesPage />} />
+
+        <Route element={<PrivateRoute />}>
           <Route path="config" element={<ConfigPage />} />
-        </Routes>
-      </Suspense>
-      <Footer />
-    </div>
+        </Route>
+
+        <Route element={<RestrictedRoute />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }

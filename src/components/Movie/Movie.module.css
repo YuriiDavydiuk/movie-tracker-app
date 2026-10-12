@@ -157,3 +157,7 @@
   background-color: #dc3545;
   color: #fff;
 }
+
+.alert {
+  margin: 0 12px 12px;
+}
