@@ -4,6 +4,9 @@ import type { Movie as MovieType } from '../../types/movie';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMovie } from '../../services/movieService';
 import Modal from '../Modal/Modal';
+import AlertMessage from '../AlertMessage/AlertMessage';
+import { getMovieErrorMessage } from '../../utils/getMovieErrorMessage';
+import { useAuth } from '../../context/AuthContext/useAuth';
 
 interface MovieProps {
   movie: MovieType;
@@ -13,6 +16,7 @@ interface MovieProps {
 export default function Movie({ movie, onEdit }: MovieProps) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { isAuthenticated } = useAuth();
 
   const mutation = useMutation({
     mutationFn: deleteMovie,
@@ -33,19 +37,26 @@ export default function Movie({ movie, onEdit }: MovieProps) {
       <p className={css.status}>{movie.status}</p>
       <p>{movie.releaseYear}</p>
       <p>{movie.tagline}</p>
-      <div className={css.footer}>
-        <button className={css.edit} onClick={() => onEdit(movie)}>
-          Edit
-        </button>
-        <button
-          className={css.delete}
-          disabled={mutation.isPending}
-          onClick={() => setIsConfirmOpen(true)}
-        >
-          Delete
-        </button>
-      </div>
-      {mutation.isError && <p role="alert">Could not delete the movie. Please try again.</p>}
+      {isAuthenticated && (
+        <div className={css.footer}>
+          <button className={css.edit} onClick={() => onEdit(movie)}>
+            Edit
+          </button>
+          <button
+            className={css.delete}
+            disabled={mutation.isPending}
+            onClick={() => setIsConfirmOpen(true)}
+          >
+            Delete
+          </button>
+        </div>
+      )}
+      {mutation.isError && (
+        <AlertMessage
+          message={getMovieErrorMessage(mutation.error, 'delete')}
+          className={css.alert}
+        />
+      )}
       {isConfirmOpen && (
         <Modal onClose={() => setIsConfirmOpen(false)}>
           <div className={css.confirm}>

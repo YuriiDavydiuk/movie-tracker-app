@@ -9,6 +9,8 @@ import type { NewMovie } from '../../types/movie';
 
 // components
 import { createMovie } from '../../services/movieService';
+import { getMovieErrorMessage } from '../../utils/getMovieErrorMessage';
+import AlertMessage from '../AlertMessage/AlertMessage';
 
 interface CreateMovieForm {
   onClose: () => void;
@@ -87,9 +89,7 @@ export default function CreateMovieForm({ onClose }: CreateMovieForm) {
           <ErrorMessage name="tagline" component="span" className={css.error} />
         </div>
         {mutation.isError && (
-          <p className={css.error} role="alert">
-            Could not save the movie. Please try again
-          </p>
+          <AlertMessage message={getMovieErrorMessage(mutation.error, 'create')} />
         )}
         <div className={css.actions}>
           <button type="button" className={css.cancelButton} onClick={onClose}>

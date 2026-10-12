@@ -6,6 +6,8 @@ import css from '../../styles/MovieForm.module.css';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import type { Movie, MovieUpdate } from '../../types/movie';
 import { updateMovie } from '../../services/movieService';
+import { getMovieErrorMessage } from '../../utils/getMovieErrorMessage';
+import AlertMessage from '../AlertMessage/AlertMessage';
 
 interface EditMovieFormProps {
   movie: Movie;
@@ -84,9 +86,7 @@ export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
           <ErrorMessage name="tagline" component="span" className={css.error} />
         </div>
         {mutation.isError && (
-          <p className={css.error} role="alert">
-            Could not save the movie. Please try again
-          </p>
+          <AlertMessage message={getMovieErrorMessage(mutation.error, 'edit')} />
         )}
         <div className={css.actions}>
           <button type="button" className={css.cancelButton} onClick={onClose}>
