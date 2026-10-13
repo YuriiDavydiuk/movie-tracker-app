@@ -1,21 +1,38 @@
 .listItem {
   display: flex;
   flex-direction: column;
+
+  overflow: hidden;
+
+  background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
+}
+
+.poster,
+.posterFallback {
+  width: 100%;
+  aspect-ratio: 4 / 5;
 }
 
 .poster {
-  width: 100%;
-  aspect-ratio: 4 / 6;
   object-fit: cover;
-  cursor: pointer;
+}
+
+.posterFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  color: #868e96;
+
+  background: #e9ecef;
 }
 
 .title {
   margin: 8px 12px 0;
+
   font-size: 16px;
   font-weight: 600;
   color: #212529;
@@ -23,41 +40,56 @@
 
 .status {
   margin: 2px 12px 0;
+
   font-size: 13px;
-  color: #6c757d;
   text-transform: capitalize;
+  color: #6c757d;
 }
 
 .status + p {
   margin: 2px 12px 0;
+
   font-size: 13px;
   color: #6c757d;
 }
 
 .status + p + p {
   margin: 2px 12px 8px;
+  overflow: hidden;
+
   font-size: 13px;
   font-style: italic;
   color: #495057;
-  overflow: hidden;
 }
 
 .footer {
   display: flex;
   gap: 8px;
-  padding: 12px;
+  flex-wrap: wrap;
   margin-top: auto;
+  padding: 12px;
+}
+
+.edit,
+.delete {
+  flex: 1;
+
+  min-height: 40px;
+  padding: 6px 12px;
+
+  font-size: 14px;
+
+  border-radius: 4px;
+
+  cursor: pointer;
 }
 
 .edit {
-  flex: 1;
-  padding: 6px 12px;
-  font-size: 14px;
   color: #fff;
+
   background-color: #0d6efd;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+
   transition: background-color 0.2s ease;
 }
 
@@ -66,73 +98,80 @@
 }
 
 .delete {
-  flex: 1;
-  padding: 6px 12px;
-  font-size: 14px;
   color: #dc3545;
+
   background-color: #fff;
   border: 1px solid #dc3545;
-  border-radius: 4px;
-  cursor: pointer;
+
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
 }
 
 .delete:hover {
-  background-color: #dc3545;
   color: #fff;
+
+  background-color: #dc3545;
 }
 
-.posterFallback {
-  width: 100%;
-  aspect-ratio: 4 / 6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e9ecef;
-  color: #868e96;
-  font-size: 13px;
+.alert {
+  margin: 0 12px 12px;
 }
 
 .confirm {
-  text-align: center;
   max-width: 300px;
   margin: 0 auto;
+
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .confirmText {
   margin: 0;
+
   font-size: 17px;
   font-weight: 600;
   color: #212529;
+}
+
+.confirmSubtext {
+  margin: 6px 0 0;
+
+  font-size: 13px;
+  color: #6c757d;
 }
 
 .confirmMovieTitle {
   color: #212529;
 }
 
-.confirmSubtext {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: #6c757d;
-}
-
 .confirmActions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+
   margin-top: 24px;
 }
 
-.cancelButton {
+.cancelButton,
+.confirmDeleteButton {
+  min-height: 40px;
   padding: 8px 16px;
+
   font-size: 16px;
-  border: 1px solid #ced4da;
+
   border-radius: 4px;
-  background: #f8f9fa;
-  color: #212529;
+
   cursor: pointer;
+}
+
+.cancelButton {
+  color: #212529;
+
+  background: #f8f9fa;
+  border: 1px solid #ced4da;
+
   transition: background-color 0.2s ease;
 }
 
@@ -141,23 +180,18 @@
 }
 
 .confirmDeleteButton {
-  padding: 8px 16px;
-  font-size: 16px;
   color: #dc3545;
+
   background-color: #fff;
   border: 1px solid #dc3545;
-  border-radius: 4px;
-  cursor: pointer;
+
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
 }
 
 .confirmDeleteButton:hover {
-  background-color: #dc3545;
   color: #fff;
-}
 
-.alert {
-  margin: 0 12px 12px;
+  background-color: #dc3545;
 }

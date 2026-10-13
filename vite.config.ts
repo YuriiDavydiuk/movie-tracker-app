@@ -5,6 +5,15 @@ import { defineConfig } from 'vite';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://movie-tracker-api-wy9c.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   build: {
     sourcemap: true,
   },

@@ -1,13 +1,15 @@
 .page {
   display: flex;
   justify-content: center;
-  padding: 60px 16px;
+
+  padding: 24px 20px;
 }
 
 .card {
   width: 100%;
   max-width: 400px;
-  padding: 32px;
+  padding: 20px;
+
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -16,6 +18,7 @@
 
 .title {
   margin: 0;
+
   font-size: 24px;
   font-weight: 700;
   color: #212529;
@@ -23,12 +26,18 @@
 
 .subtitle {
   margin: 8px 0 24px;
+
   font-size: 14px;
   color: #6c757d;
 }
 
+.submit {
+  width: 100%;
+}
+
 .switch {
   margin: 24px 0 0;
+
   font-size: 14px;
   text-align: center;
   color: #6c757d;
@@ -43,6 +52,12 @@
   text-decoration: underline;
 }
 
-.submit {
-  width: 100%;
+@media (min-width: 768px) {
+  .page {
+    padding: 60px 32px;
+  }
+
+  .card {
+    padding: 32px;
+  }
 }

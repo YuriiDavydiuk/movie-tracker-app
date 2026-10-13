@@ -4,7 +4,6 @@ import Pagination from '../Pagination/Pagination';
 import { useMovies } from '../../context/MoviesContext/useMovie';
 import { useModal } from '../../context/ModalContext/useModal';
 import { useAuth } from '../../context/AuthContext/useAuth';
-import { Link } from 'react-router-dom';
 
 export default function Header() {
   const { data, currentPage, setCurrentPage, handleSearch } = useMovies();
@@ -12,25 +11,29 @@ export default function Header() {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
   return (
-    <header className={css.toolbar}>
-      <SearchBox onSearch={handleSearch} />
-      {data && data.totalPages > 1 && (
-        <Pagination
-          totalPages={data.totalPages}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      )}
-      {!isAuthLoading &&
-        (isAuthenticated ? (
-          <button className={css.button} onClick={openCreate}>
-            Create Movie
-          </button>
-        ) : (
-          <Link to="/login" className={css.button}>
-            Log in to manage movies
-          </Link>
-        ))}
-    </header>
+    <div className={css.toolbar}>
+      <div className={`container ${css.toolbarInner}`}>
+        <div className={css.search}>
+          <SearchBox onSearch={handleSearch} />
+        </div>
+        <div className={css.pagination}>
+          {data && data.totalPages > 1 && (
+            <Pagination
+              totalPages={data.totalPages}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          )}
+        </div>
+
+        <div className={css.actions}>
+          {!isAuthLoading && isAuthenticated && (
+            <button type="button" className={css.button} onClick={openCreate}>
+              Create Movie
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

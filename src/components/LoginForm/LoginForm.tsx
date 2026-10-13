@@ -7,6 +7,7 @@ import { AUTH_QUERY_KEY } from '../../context/AuthContext/context';
 import { loginSchema, type LoginFormValues } from '../../validation/authSchema';
 import { getAuthErrorMessage } from '../../utils/getAuthErrorMessage';
 import AlertMessage from '../AlertMessage/AlertMessage';
+import { useAuth } from '../../context/AuthContext/useAuth';
 
 const initialValues: LoginFormValues = {
   email: '',
@@ -14,11 +15,13 @@ const initialValues: LoginFormValues = {
 };
 
 export default function LoginForm() {
+  const { clearSessionExpired } = useAuth();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: user => {
+      clearSessionExpired();
       queryClient.setQueryData(AUTH_QUERY_KEY, user);
       queryClient.invalidateQueries({ queryKey: ['movies'] });
     },

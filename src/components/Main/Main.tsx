@@ -10,7 +10,7 @@ export default function Main() {
   const { openEdit } = useModal();
 
   return (
-    <main className={css.app}>
+    <main className={`container ${css.app}`}>
       {isLoading && <Loader />}
       {isFetching && !isLoading && (
         <p className={css.updating} role="status">
