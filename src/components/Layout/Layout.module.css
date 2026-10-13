@@ -5,12 +5,18 @@
 }
 
 .appBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 32px;
+  padding: 12px 0;
+
   background-color: #fff;
   border-bottom: 1px solid #dee2e6;
+}
+
+.appBarInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .logo {

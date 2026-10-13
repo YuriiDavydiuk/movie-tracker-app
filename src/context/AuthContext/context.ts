@@ -7,6 +7,8 @@ export interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   isAuthLoading: boolean;
+  isSessionExpired: boolean;
+  clearSessionExpired: () => void;
 }
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined);

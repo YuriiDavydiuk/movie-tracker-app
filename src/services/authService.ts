@@ -27,7 +27,3 @@ export async function getCurrentUser(): Promise<User | null> {
     throw error;
   }
 }
-
-export async function refreshSession(): Promise<void> {
-  await api.post<void>('/auth/refresh');
-}

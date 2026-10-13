@@ -1,5 +1,9 @@
 import css from './Footer.module.css';
 
 export default function Footer() {
-  return <footer className={css.footer}>Movie Explorer {new Date().getFullYear()}</footer>;
+  return (
+    <footer className={css.footer}>
+      <div className="container">Movie Tracker {new Date().getFullYear()}</div>
+    </footer>
+  );
 }

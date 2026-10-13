@@ -7,6 +7,7 @@ import Modal from '../Modal/Modal';
 import AlertMessage from '../AlertMessage/AlertMessage';
 import { getMovieErrorMessage } from '../../utils/getMovieErrorMessage';
 import { useAuth } from '../../context/AuthContext/useAuth';
+import { useMovies } from '../../context/MoviesContext/useMovie';
 
 interface MovieProps {
   movie: MovieType;
@@ -16,12 +17,18 @@ interface MovieProps {
 export default function Movie({ movie, onEdit }: MovieProps) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { data, currentPage, setCurrentPage } = useMovies();
   const { isAuthenticated } = useAuth();
 
   const mutation = useMutation({
     mutationFn: deleteMovie,
     onSuccess: () => {
       setIsConfirmOpen(false);
+
+      if (data?.movies.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+
       queryClient.invalidateQueries({ queryKey: ['movies'] });
     },
   });
@@ -71,12 +78,12 @@ export default function Movie({ movie, onEdit }: MovieProps) {
               </button>
               <button
                 className={css.confirmDeleteButton}
+                disabled={mutation.isPending}
                 onClick={() => {
                   mutation.mutate(movie._id);
-                  setIsConfirmOpen(false);
                 }}
               >
-                Delete
+                {mutation.isPending ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           </div>

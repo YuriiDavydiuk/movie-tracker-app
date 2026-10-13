@@ -2,11 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import css from '../../styles/MovieForm.module.css';
 import authCss from '../../styles/AuthPage.module.css';
-import { login, register } from '../../services/authService';
+import { register } from '../../services/authService';
 import { AUTH_QUERY_KEY } from '../../context/AuthContext/context';
 import { registerSchema, type RegisterFormValues } from '../../validation/authSchema';
 import { getAuthErrorMessage } from '../../utils/getAuthErrorMessage';
-import type { AuthCredentials } from '../../types/auth';
+import { useAuth } from '../../context/AuthContext/useAuth';
+
 import AlertMessage from '../AlertMessage/AlertMessage';
 
 const initialValues: RegisterFormValues = {
@@ -15,17 +16,14 @@ const initialValues: RegisterFormValues = {
   confirmPassword: '',
 };
 
-async function registerAndLogin(credentials: AuthCredentials) {
-  await register(credentials);
-  return login(credentials);
-}
-
 export default function RegisterForm() {
+  const { clearSessionExpired } = useAuth();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: registerAndLogin,
+    mutationFn: register,
     onSuccess: user => {
+      clearSessionExpired();
       queryClient.setQueryData(AUTH_QUERY_KEY, user);
       queryClient.invalidateQueries({ queryKey: ['movies'] });
     },

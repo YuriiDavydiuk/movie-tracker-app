@@ -5,7 +5,7 @@ import type { MovieHttpResponse, Movie, NewMovie, MovieUpdate } from '../types/m
 export async function getMovies(
   search: string,
   page: number,
-  perPage: number = 5
+  perPage: number
 ): Promise<MovieHttpResponse> {
   const response = await api.get<MovieHttpResponse>(`/movies`, {
     params: {
