@@ -12,7 +12,7 @@ export function MoviesProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const tablet = window.matchMedia('(min-width: 768px)');
-    const desktop = window.matchMedia('(min-width: 1440px)');
+    const desktop = window.matchMedia('(min-width: 1400px)');
 
     const handleChange = () => {
       setPerPage(getLimit());

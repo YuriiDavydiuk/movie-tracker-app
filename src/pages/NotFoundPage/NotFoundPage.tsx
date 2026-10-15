@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
-import css from './NotFoundPage.module.css';
 
 export default function NotFoundPage() {
   return (
-    <section className={css.section}>
-      <h1 className={css.code}>404</h1>
-      <p className={css.text}>Page not found</p>
-      <Link to="/" className={css.link}>
+    <section className="container d-flex flex-column align-items-center gap-3 py-5 text-center">
+      <h1 className="display-1 fw-bold mb-0">404</h1>
+      <p className="fs-5 text-body-secondary mb-0">Page not found</p>
+      <Link to="/" className="btn btn-primary">
         Back to movies
       </Link>
     </section>

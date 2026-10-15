@@ -25,7 +25,7 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
 
   return (
     <input
-      className={css.input}
+      className={`${css.input} form-control`}
       type="text"
       placeholder="Search movie..."
       defaultValue={searchQuery}

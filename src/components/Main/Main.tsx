@@ -20,7 +20,7 @@ export default function Main() {
       {isError && <ErrorMessage />}
 
       {data && data.movies.length > 0 && (
-        <ul className={css.list}>
+        <ul className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-5 g-3 list-unstyled mb-0">
           {data.movies.map(movie => (
             <Movie key={movie._id} movie={movie} onEdit={openEdit} />
           ))}

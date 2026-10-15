@@ -1,6 +1,3 @@
-// styles
-import css from '../../styles/MovieForm.module.css';
-
 // libraries
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
@@ -58,44 +55,68 @@ export default function CreateMovieForm({ onClose }: CreateMovieForm) {
 
   return (
     <Formik initialValues={initialValues} validationSchema={movieSchema} onSubmit={handleSubmit}>
-      <Form className={css.form}>
-        <h2 className={css.heading}>Create Movie</h2>
+      <Form className="d-flex flex-column gap-3">
+        <h2 className="h5 fw-bold mb-0">Create Movie</h2>
 
-        <div className={css.formGroup}>
-          <label htmlFor="title">Title</label>
-          <Field id="title" type="text" name="title" className={css.input} />
-          <ErrorMessage name="title" component="span" className={css.error} />
+        <div>
+          <label htmlFor="title" className="form-label">
+            Title
+          </label>
+          <Field id="title" type="text" name="title" className="form-control" />
+          <ErrorMessage
+            name="title"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="status">Status</label>
-          <Field as="select" id="status" name="status" className={css.select}>
+        <div>
+          <label htmlFor="status" className="form-label">
+            Status
+          </label>
+          <Field as="select" id="status" name="status" className="form-select">
             <option value="plan">Plan</option>
             <option value="watching">Watching</option>
             <option value="watched">Watched</option>
           </Field>
-          <ErrorMessage name="status" component="span" className={css.error} />
+          <ErrorMessage
+            name="status"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="releaseYear">Release Year</label>
-          <Field id="releaseYear" type="text" name="releaseYear" className={css.input} />
-          <ErrorMessage name="releaseYear" component="span" className={css.error} />
+        <div>
+          <label htmlFor="releaseYear" className="form-label">
+            Release Year
+          </label>
+          <Field id="releaseYear" type="text" name="releaseYear" className="form-control" />
+          <ErrorMessage
+            name="releaseYear"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="tagline">Tagline</label>
-          <Field id="tagline" type="text" name="tagline" className={css.input} />
-          <ErrorMessage name="tagline" component="span" className={css.error} />
+        <div>
+          <label htmlFor="tagline" className="form-label">
+            Tagline
+          </label>
+          <Field id="tagline" type="text" name="tagline" className="form-control" />
+          <ErrorMessage
+            name="tagline"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
         {mutation.isError && (
           <AlertMessage message={getMovieErrorMessage(mutation.error, 'create')} />
         )}
-        <div className={css.actions}>
-          <button type="button" className={css.cancelButton} onClick={onClose}>
+        <div className="d-flex flex-column flex-sm-row justify-content-sm-end gap-2">
+          <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
             Cancel
           </button>
-          <button type="submit" className={css.submitButton} disabled={mutation.isPending}>
+          <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
             {mutation.isPending ? 'Creating' : 'Create'}
           </button>
         </div>

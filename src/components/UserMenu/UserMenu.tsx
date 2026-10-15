@@ -22,11 +22,13 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <div className={css.menu}>
-        <Link to="/login" className={css.button}>
+      <div
+        className={`${css.menu} d-flex flex-wrap align-items-center justify-content-center justify-content-md-end gap-2`}
+      >
+        <Link to="/login" className="btn btn-outline-primary">
           Sign in
         </Link>
-        <Link to="/register" className={css.button}>
+        <Link to="/register" className="btn btn-primary">
           Sign up
         </Link>
       </div>
@@ -34,12 +36,14 @@ export default function UserMenu() {
   }
 
   return (
-    <div className={css.menu}>
+    <div
+      className={`${css.menu} d-flex flex-wrap align-items-center justify-content-center justify-content-md-end gap-2`}
+    >
       <span className={css.email}>{user.email}</span>
 
       <button
         type="button"
-        className={css.button}
+        className="btn btn-outline-secondary"
         disabled={mutation.isPending}
         onClick={() => mutation.mutate()}
       >

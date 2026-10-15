@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import css from './Modal.module.css';
+
 import { useEffect } from 'react';
 
 interface ModalProps {
@@ -31,9 +31,24 @@ export default function Modal({ onClose, children }: ModalProps) {
   }, [onClose]);
 
   return createPortal(
-    <div className={css.backdrop} role="dialog" aria-modal="true" onClick={handleBackdropClick}>
-      <div className={css.modal}>{children}</div>
-    </div>,
+    <>
+      <div
+        className="modal d-block"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Movie dialog"
+        tabIndex={-1}
+        onClick={handleBackdropClick}
+      >
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-body p-3 p-md-4">{children}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal-backdrop show" aria-hidden="true" />
+    </>,
     document.body
   );
 }

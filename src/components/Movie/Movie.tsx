@@ -34,61 +34,76 @@ export default function Movie({ movie, onEdit }: MovieProps) {
   });
 
   return (
-    <li className={css.listItem}>
-      {movie.poster ? (
-        <img src={movie.poster} alt={movie.title} className={css.poster} />
-      ) : (
-        <div className={css.posterFallback}>No poster</div>
-      )}
-      <h2 className={css.title}>{movie.title}</h2>
-      <p className={css.status}>{movie.status}</p>
-      <p>{movie.releaseYear}</p>
-      <p>{movie.tagline}</p>
-      {isAuthenticated && (
-        <div className={css.footer}>
-          <button className={css.edit} onClick={() => onEdit(movie)}>
-            Edit
-          </button>
-          <button
-            className={css.delete}
-            disabled={mutation.isPending}
-            onClick={() => setIsConfirmOpen(true)}
+    <li className="col">
+      <div className="card h-100 overflow-hidden">
+        {movie.poster ? (
+          <img
+            src={movie.poster}
+            alt={movie.title}
+            className={`${css.poster} card-img-top object-fit-cover`}
+          />
+        ) : (
+          <div
+            className={`${css.poster} w-100 d-flex align-items-center justify-content-center bg-secondary-subtle text-body-secondary small`}
           >
-            Delete
-          </button>
-        </div>
-      )}
-      {mutation.isError && (
-        <AlertMessage
-          message={getMovieErrorMessage(mutation.error, 'delete')}
-          className={css.alert}
-        />
-      )}
-      {isConfirmOpen && (
-        <Modal onClose={() => setIsConfirmOpen(false)}>
-          <div className={css.confirm}>
-            <p className={css.confirmText}>Delete movie?</p>
-            <p className={css.confirmSubtext}>
-              <strong className={css.confirmMovieTitle}>&quot;{movie.title}&quot;</strong> will be
-              permanently removed.
-            </p>
-            <div className={css.confirmActions}>
-              <button className={css.cancelButton} onClick={() => setIsConfirmOpen(false)}>
-                Cancel
-              </button>
-              <button
-                className={css.confirmDeleteButton}
-                disabled={mutation.isPending}
-                onClick={() => {
-                  mutation.mutate(movie._id);
-                }}
-              >
-                {mutation.isPending ? 'Deleting...' : 'Delete'}
-              </button>
-            </div>
+            No poster
           </div>
-        </Modal>
-      )}
+        )}
+        <div className="card-body">
+          <h2 className="card-title h6 fw-semibold">{movie.title}</h2>
+          <p className="small text-body-secondary text-capitalize mb-1">{movie.status}</p>
+          <p className="small text-body-secondary mb-1">{movie.releaseYear}</p>
+          <p className="small fst-italic mb-0">{movie.tagline}</p>
+        </div>
+        {isAuthenticated && (
+          <div className="d-flex flex-wrap gap-2 mt-auto p-3">
+            <button className="btn btn-primary flex-fill" onClick={() => onEdit(movie)}>
+              Edit
+            </button>
+            <button
+              className="btn btn-outline-danger flex-fill"
+              disabled={mutation.isPending}
+              onClick={() => setIsConfirmOpen(true)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+        {mutation.isError && (
+          <AlertMessage
+            message={getMovieErrorMessage(mutation.error, 'delete')}
+            className="mt-0 mx-3 mb-3"
+          />
+        )}
+        {isConfirmOpen && (
+          <Modal onClose={() => setIsConfirmOpen(false)}>
+            <div className={css.confirm}>
+              <h2 className="h6 fw-semibold mb-2">Delete movie?</h2>
+              <p className="small text-body-secondary mb-0">
+                <strong className="text-body">&quot;{movie.title}&quot;</strong> will be permanently
+                removed.
+              </p>
+              <div className="d-flex flex-wrap justify-content-center gap-2 mt-4">
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => setIsConfirmOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-danger"
+                  disabled={mutation.isPending}
+                  onClick={() => {
+                    mutation.mutate(movie._id);
+                  }}
+                >
+                  {mutation.isPending ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </div>
     </li>
   );
 }

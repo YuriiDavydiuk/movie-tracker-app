@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import 'modern-normalize/modern-normalize.css';
 import './styles/reset.css';
-import './styles/container.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './components/App/App.tsx';
 import { AuthProvider } from './context/AuthContext/AuthProvider.tsx';
 

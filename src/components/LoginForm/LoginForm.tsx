@@ -1,7 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import css from '../../styles/MovieForm.module.css';
-import authCss from '../../styles/AuthPage.module.css';
 import { login } from '../../services/authService';
 import { AUTH_QUERY_KEY } from '../../context/AuthContext/context';
 import { loginSchema, type LoginFormValues } from '../../validation/authSchema';
@@ -33,34 +31,48 @@ export default function LoginForm() {
 
   return (
     <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={handleSubmit}>
-      <Form className={css.form} noValidate>
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <Field id="email" name="email" type="email" autoComplete="email" className={css.input} />
-          <ErrorMessage name="email" component="span" className={css.error} />
+      <Form className="d-flex flex-column gap-3" noValidate>
+        <div>
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <Field
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            className="form-control"
+          />
+          <ErrorMessage
+            name="email"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
+        <div>
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
           <Field
             id="password"
             name="password"
             type="password"
             autoComplete="current-password"
-            className={css.input}
+            className="form-control"
           />
-          <ErrorMessage name="password" component="span" className={css.error} />
+          <ErrorMessage
+            name="password"
+            component="span"
+            className="small text-danger d-block mt-1 text-break"
+          />
         </div>
 
         {mutation.isError && (
           <AlertMessage message={getAuthErrorMessage(mutation.error, 'login')} />
         )}
 
-        <button
-          type="submit"
-          className={`${css.submitButton} ${authCss.submit}`}
-          disabled={mutation.isPending}
-        >
+        <button type="submit" className="btn btn-primary w-100" disabled={mutation.isPending}>
           {mutation.isPending ? 'Signing in...' : 'Sign in'}
         </button>
       </Form>

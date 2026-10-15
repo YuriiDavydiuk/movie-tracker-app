@@ -1,21 +1,6 @@
-.toolbar {
-  margin-bottom: 16px;
-  padding: 16px 0;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.toolbarInner {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
-}
-
 .search,
 .actions {
   display: flex;
-  justify-content: center;
   min-width: 0;
 }
 
@@ -27,43 +12,10 @@
   display: none;
 }
 
-.button {
-  min-height: 40px;
-  padding: 8px 12px;
-
-  font-size: 16px;
-  color: #fff;
-
-  background-color: #0d6efd;
-  border: none;
-  border-radius: 4px;
-
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.button:hover {
-  background-color: #0b5ed7;
-}
-
 @media (min-width: 768px) {
-  .toolbarInner {
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-  }
-
   .search,
   .actions {
     flex: 1;
-  }
-
-  .search {
-    justify-content: flex-start;
-  }
-
-  .actions {
-    justify-content: flex-end;
   }
 
   .actions:empty {
