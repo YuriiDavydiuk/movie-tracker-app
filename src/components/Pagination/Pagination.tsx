@@ -1,4 +1,3 @@
-import css from './Pagination.module.css';
 import ReactPaginateModule from 'react-paginate';
 import { type ReactPaginateProps } from 'react-paginate';
 import { type ComponentType } from 'react';
@@ -16,6 +15,8 @@ interface PaginationProps {
 }
 
 export default function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
+  const linkClasses =
+    'flex h-10 min-w-9 cursor-pointer items-center justify-center rounded border border-gray-200 px-2 text-sm hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600';
   return (
     <ReactPaginate
       pageCount={totalPages}
@@ -23,16 +24,13 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
       marginPagesDisplayed={1}
       onPageChange={({ selected }) => onPageChange(selected + 1)}
       forcePage={currentPage - 1}
-      containerClassName={css.pagination}
-      pageClassName={css.pageItem}
-      pageLinkClassName={css.pageLink}
-      previousClassName={css.pageItem}
-      previousLinkClassName={css.pageLink}
-      nextClassName={css.pageItem}
-      nextLinkClassName={css.pageLink}
-      breakClassName={css.pageItem}
-      breakLinkClassName={css.pageLink}
-      activeClassName={css.active}
+      containerClassName="flex flex-wrap justify-center gap-1 text-blue-600"
+      pageLinkClassName={linkClasses}
+      previousLinkClassName={linkClasses}
+      nextLinkClassName={linkClasses}
+      breakLinkClassName={linkClasses}
+      activeLinkClassName="bg-blue-600 font-medium text-white"
+      disabledClassName="pointer-events-none opacity-50"
       nextLabel="›"
       previousLabel="‹"
     />

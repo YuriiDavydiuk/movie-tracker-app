@@ -1,8 +1,6 @@
 import { movieSchema } from '../../validation/movieSchema';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import css from '../../styles/MovieForm.module.css';
-
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import type { Movie, MovieUpdate } from '../../types/movie';
 import { updateMovie } from '../../services/movieService';
@@ -43,6 +41,10 @@ export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
     }
     mutation.mutate(payload);
   };
+  const fieldClasses =
+    'min-h-10 w-full min-w-0 rounded border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:border-blue-600 focus:outline-2 focus:outline-offset-2 focus:outline-blue-600';
+
+  const errorClasses = 'mt-1 block text-xs text-red-600 wrap-anywhere';
 
   return (
     <Formik
@@ -55,44 +57,60 @@ export default function EditMovieForm({ movie, onClose }: EditMovieFormProps) {
       validationSchema={movieSchema}
       onSubmit={handleSubmit}
     >
-      <Form className={css.form}>
-        <h2 className={css.heading}>Edit movie</h2>
+      <Form className="flex flex-col gap-4">
+        <h2 className="text-lg font-bold text-gray-900">Edit movie</h2>
 
-        <div className={css.formGroup}>
-          <label htmlFor="title">Title</label>
-          <Field id="title" type="text" name="title" className={css.input} />
-          <ErrorMessage name="title" component="span" className={css.error} />
+        <div>
+          <label htmlFor="title" className="mb-1 block text-sm font-medium text-gray-900">
+            Title
+          </label>
+          <Field id="title" type="text" name="title" className={fieldClasses} />
+          <ErrorMessage name="title" component="span" className={errorClasses} />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="status">Status</label>
-          <Field as="select" id="status" name="status" className={css.select}>
+        <div>
+          <label htmlFor="status" className="mb-1 block text-sm font-medium text-gray-900">
+            Status
+          </label>
+          <Field as="select" id="status" name="status" className={fieldClasses}>
             <option value="plan">Plan</option>
             <option value="watching">Watching</option>
             <option value="watched">Watched</option>
           </Field>
-          <ErrorMessage name="status" component="span" className={css.error} />
+          <ErrorMessage name="status" component="span" className={errorClasses} />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="releaseYear">Release Year</label>
-          <Field id="releaseYear" type="text" name="releaseYear" className={css.input} />
-          <ErrorMessage name="releaseYear" component="span" className={css.error} />
+        <div>
+          <label htmlFor="releaseYear" className="mb-1 block text-sm font-medium text-gray-900">
+            Release Year
+          </label>
+          <Field id="releaseYear" type="text" name="releaseYear" className={fieldClasses} />
+          <ErrorMessage name="releaseYear" component="span" className={errorClasses} />
         </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="tagline">Tagline</label>
-          <Field id="tagline" type="text" name="tagline" className={css.input} />
-          <ErrorMessage name="tagline" component="span" className={css.error} />
+        <div>
+          <label htmlFor="tagline" className="mb-1 block text-sm font-medium text-gray-900">
+            Tagline
+          </label>
+          <Field id="tagline" type="text" name="tagline" className={fieldClasses} />
+          <ErrorMessage name="tagline" component="span" className={errorClasses} />
         </div>
         {mutation.isError && (
           <AlertMessage message={getMovieErrorMessage(mutation.error, 'edit')} />
         )}
-        <div className={css.actions}>
-          <button type="button" className={css.cancelButton} onClick={onClose}>
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            className="min-h-10 cursor-pointer rounded border border-gray-300 bg-gray-50 px-4 py-2 text-base text-gray-900 transition-colors hover:bg-gray-200"
+            onClick={onClose}
+          >
             Cancel
           </button>
-          <button type="submit" className={css.submitButton} disabled={mutation.isPending}>
+          <button
+            type="submit"
+            className="min-h-10 cursor-pointer rounded bg-blue-600 px-4 py-2 text-base text-white transition-colors enabled:hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={mutation.isPending}
+          >
             {mutation.isPending ? 'Saving...' : 'Save'}
           </button>
         </div>

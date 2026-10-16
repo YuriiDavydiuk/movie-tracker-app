@@ -1,4 +1,3 @@
-import css from './Header.module.css';
 import SearchBox from '../SearchBox/SearchBox';
 import Pagination from '../Pagination/Pagination';
 import { useMovies } from '../../context/MoviesContext/useMovie';
@@ -11,12 +10,13 @@ export default function Header() {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
   return (
-    <div className={css.toolbar}>
-      <div className={`container ${css.toolbarInner}`}>
-        <div className={css.search}>
+    <div className="mb-4 border-b border-gray-200 bg-gray-50 py-4">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-stretch gap-3 px-5 md:flex-row md:items-center md:gap-4 md:px-8 min-[90rem]:px-16">
+        <div className="flex min-w-0 justify-center md:flex-1 md:justify-start">
           <SearchBox onSearch={handleSearch} />
         </div>
-        <div className={css.pagination}>
+
+        <div className="min-w-0">
           {data && data.totalPages > 1 && (
             <Pagination
               totalPages={data.totalPages}
@@ -26,9 +26,13 @@ export default function Header() {
           )}
         </div>
 
-        <div className={css.actions}>
+        <div className="flex min-w-0 justify-center empty:hidden md:flex-1 md:justify-end md:empty:flex">
           {!isAuthLoading && isAuthenticated && (
-            <button type="button" className={css.button} onClick={openCreate}>
+            <button
+              type="button"
+              className="cursor-pointer rounded bg-blue-600 px-3 py-2 text-base text-white transition-colors hover:bg-blue-700"
+              onClick={openCreate}
+            >
               Create Movie
             </button>
           )}

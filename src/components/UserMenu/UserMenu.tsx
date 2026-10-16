@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext/useAuth';
 import { AUTH_QUERY_KEY } from '../../context/AuthContext/context';
 import { logout } from '../../services/authService';
 import AlertMessage from '../AlertMessage/AlertMessage';
-import css from './UserMenu.module.css';
+
 import { Link } from 'react-router-dom';
 
 export default function UserMenu() {
@@ -22,11 +22,17 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <div className={css.menu}>
-        <Link to="/login" className={css.button}>
+      <div className="flex min-w-0 max-w-full flex-wrap items-center justify-center gap-3 md:justify-end">
+        <Link
+          to="/login"
+          className="inline-flex min-h-10 cursor-pointer items-center justify-center rounded border border-blue-600 px-3 py-1.5 text-base text-blue-600 transition-colors hover:bg-blue-50"
+        >
           Sign in
         </Link>
-        <Link to="/register" className={css.button}>
+        <Link
+          to="/register"
+          className="inline-flex min-h-10 cursor-pointer items-center justify-center rounded bg-blue-600 px-3 py-1.5 text-base text-white transition-colors hover:bg-blue-700"
+        >
           Sign up
         </Link>
       </div>
@@ -34,12 +40,12 @@ export default function UserMenu() {
   }
 
   return (
-    <div className={css.menu}>
-      <span className={css.email}>{user.email}</span>
+    <div className="flex min-w-0 max-w-full flex-wrap items-center justify-center gap-3 md:justify-end">
+      <span className="min-w-0 max-w-full text-sm text-gray-700 wrap-anywhere">{user.email}</span>
 
       <button
         type="button"
-        className={css.button}
+        className="inline-flex min-h-10 cursor-pointer items-center justify-center rounded border border-gray-300 px-3 py-1.5 text-base text-gray-700 transition-colors enabled:hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={mutation.isPending}
         onClick={() => mutation.mutate()}
       >
